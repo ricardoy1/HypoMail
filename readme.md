@@ -35,7 +35,6 @@ The MailsService takes the DTOs from the client and transform them back to the b
 
 
 *Validation*
-The validator returns a list with the validation errors and then they are returned back to the client. Even though the UI does not allow the user to enter a Mail without modules, for instance, the backend validates everything again to make sure that we can rely on the service. In addition, this is a web-app and a person with a minimum knowledge of web technologies would be able to remove the modules from the HTTP request before it reaches the Ajax call and then our model would end-up having an wrong Mail.
 
 
 *Dependency Injection*
@@ -46,35 +45,8 @@ The appliation counts with many unit tests that cover the main features from bac
 I used Jasmine to test each of the controls and mocking its dependencies using Spy and $q among others. The Javascript tests can be run from the web app by adding /specs/testrunner.html to the URL.
 C# unit testing used Fluent Assertions as I consider this makes unit tests quite readble.
 
-*Assumptions*
-
-Assignement: The list should show the Mail name, price, duration and “new” column. Modules can be loaded via a link to Mail “Details” which will list out Mail details and Modules. If the item was created in the past 7 days the new column should state that this Mail is “new”." 
-
 *Dates*
 I  assume we don't need to display the created and modified dates at all. They will be used for internal statistics, logs and finding out if the Mail is "New" or not.
-
-Modifying any module or Mail attribute will change the modified date of the Mail.
-Modifying the module will change the modified date of the module.
-The dates will be handled on the server side.
-
-*Duration*
-The duration of the Mail is given by the total of hours of its modules. Therefore, it will be redundant to keep record in the database of the total of hours of a Mail (http://en.wikipedia.org/wiki/Second_normal_form).
-The duration of the Mail and modules will be given in hours and each module cannot be longer than 24 hours. 
-The hours duration will allow only an interger number.
-
-*Clarifications*
-Even though I didn't have enough time to finish the sorting and search, I tried to leave the application as ready as I could in order to address that task in the future.
-
-*Peding Features due to the lack of time*
-Sorting. 
-Search.
-Logging.
-Security.
-
-*Testing*
-I have created around 50 unit tests:
-26 Back end tests.
-24 Javascript tests.
 
 *Unit Testing Technologies*
 NUnit
