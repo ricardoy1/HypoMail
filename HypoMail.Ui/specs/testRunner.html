@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Jasmine Spec Runner</title>
+    <link rel="stylesheet" type="text/css" href="/css/jasmine.css">
+    
+    <script type="text/javascript" src="/Scripts/jasmine.js"></script>
+    <script type="text/javascript" src="/Scripts/jasmine-html.js"></script>
+
+    <script type="text/javascript" src="/Scripts/angular.min.js"></script>
+    <script type="text/javascript" src="/Scripts/angular-mocks.js"></script>
+    
+    <script type="text/javascript" src="/Scripts/angular-route.js"></script>
+    <script type="text/javascript" src="/Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+
+    <!-- Production code -->
+    <script src="../app/mailsManagerApp.js"></script>
+    <script src="../app/Mail/Services/mailService.js"></script>
+    <script src="../app/Mail/Controllers/mailCtrl.js"></script>
+    <script src="../app/Mail/Controllers/mailListCtrl.js"></script>
+    <script src="../app/Mail/Controllers/moduleCtrl.js"></script>
+
+    <!-- Specs -->
+    <script src="Mail/mailCtrlSpec.js"></script>
+    <script src="Mail/mailListCtrlSpec.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        var jasmineEnv = jasmine.getEnv();
+        jasmineEnv.updateInterval = 1000;
+        var htmlReporter = new jasmine.HtmlReporter();
+        jasmineEnv.addReporter(htmlReporter);
+        jasmineEnv.specFilter = function (spec) {
+            return htmlReporter.specFilter(spec);
+        };
+        jasmineEnv.execute();
+    </script>
+</body>
+</html>
