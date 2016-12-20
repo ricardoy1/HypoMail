@@ -5,17 +5,12 @@ Class Libraries
 .NET 4.5
 Visual Studio 2013
 
-*Visual Studio Project*
-Following the instructions of not using MVC scaffolding, I started by creating an Empty Web Api project and then started to add the features on top of it.
-
 *Solution structure*
 1. Open the solution: "HypoMail.sln" with Microsoft Visual Studio 2013
 2. Build the solution, this action will update the Nuget packages installed in this solution.
-3. There are 4 different projects in the solution:
+3. There are 2 different projects in the solution:
 * HypoMail.Ui: MVC and Web Api controllers to support the front-end client.
 * HypoMail.Ui.Tests: Unit test for HypoMail.Ui
-* HypoMail.Business: Back-end business services, validators, exception handling and repository.
-* HypoMail.Business.Tests: Unit tests for HypoMail.Business 
 
 *Architecture and Design*
 
@@ -26,7 +21,7 @@ This is a basic MVC web application that loads an Angular JS SPA (Single Page Ap
 The front-end Angular JS application communicates with the server (GETs, POSTs) through Angular JS services that consume a Web Api controller.
 
 *Service Layer*
-The Web Api controller performs some exception handling by validating the model and returning a proper HTTP response. This controller gets injected, what I decided to call, a Business Service (MailsService) that is in charge of the business validations and interacting with the data respository.
+The Web Api controller performs some exception handling by validating the model and returning a proper HTTP response. This controller gets injected, what I decided to call, a Business Service (MailsService) that is in charge of the business validations and interacting with the email server.
 In order to keep a ligh-weight client and reduce the exposure of unnecessary information to the it, I decided to use DTOs that will contain the necessary information the user interface requires.
 
 *Business Service Mails*
@@ -36,7 +31,6 @@ The MailsService takes the DTOs from the client and transform them back to the b
 
 *Validation*
 
-
 *Dependency Injection*
 I have taken a TDD approach during the development of this application and I used Unity Of Work to inject and mock dependencies.
 
@@ -45,19 +39,12 @@ The appliation counts with many unit tests that cover the main features from bac
 I used Jasmine to test each of the controls and mocking its dependencies using Spy and $q among others. The Javascript tests can be run from the web app by adding /specs/testrunner.html to the URL.
 C# unit testing used Fluent Assertions as I consider this makes unit tests quite readble.
 
-*Dates*
-I  assume we don't need to display the created and modified dates at all. They will be used for internal statistics, logs and finding out if the Mail is "New" or not.
-
 *Unit Testing Technologies*
 NUnit
 MOQ Mocking Framework
 Fluent Assertions 
 Jasmine
 
-
 *How to run the tests?*
 C# tests: You can use a NUNIT runner or Resharper if you have it installed in your Visual Studio.
 Jasmine: You can run all the Jasmine tests by going to http://{app-url}/specs/testrunner.html
-
-*Live Demo*
-You will be able to find a live sample of the exact version of this application in: http://HypoMail.apphb.com/
