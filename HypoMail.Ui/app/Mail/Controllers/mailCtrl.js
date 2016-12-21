@@ -8,7 +8,7 @@ angular.module('mailsManagerApp')
             var init = function () {
 
                 $scope.mail = {
-                    from: 'mail@fromme.com',
+                    from: 'developer@hypodomain.com',
                     to: [],
                     cc: [],
                     bcc: [],
@@ -19,7 +19,7 @@ angular.module('mailsManagerApp')
 
             var validateMail = function () {
                 var deferred = $q.defer();
-                if ($scope.message) {
+                if ($scope.mail.message) {
                     deferred.resolve();
                 } else {
                     deferred.reject('The Mail is not valid.');
@@ -28,7 +28,7 @@ angular.module('mailsManagerApp')
             }
 
             var sendMail = function () {
-                return mailService.sendMail($scope.Mail);
+                return mailService.sendMail($scope.mail);
             };
 
             var showAlert = function (message) {
