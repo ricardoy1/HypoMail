@@ -8,7 +8,7 @@
 
     public class MailGun : IMailClient
     {
-        private const string ApiKey = "key-7iwzubibpo9o2xpez16t9zpb788jxkp5";
+        private const string ApiKey = "key-XXXXXXXXXXXXXXXXXXXXXXXXXX";
 
         public HttpResponseMessage Send(Mail mail)
         {
