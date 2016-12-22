@@ -17,7 +17,7 @@ namespace MailsManager.Ui.MailClients
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
                     "Bearer",
-                    "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");
+                    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
                 client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
 
                 var dynamicMessage =
