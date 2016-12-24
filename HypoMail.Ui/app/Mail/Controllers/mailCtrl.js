@@ -9,21 +9,25 @@ angular.module('mailsManagerApp')
 
                 $scope.mail = {
                     from: 'developer@hypodomain.com',
-                    to: [],
-                    cc: [],
-                    bcc: [],
+                    recipients: [],
                     subject: '',
                     message: ''
+                };
+
+                $scope.newMail = {
+                    type: 'TO',
+                    address: ''
                 };
             }
 
             var validateMail = function () {
                 var deferred = $q.defer();
-                if ($scope.mail.message) {
+                if ($scope.mail.recipients.length > 0) {
                     deferred.resolve();
                 } else {
-                    deferred.reject('The Mail is not valid.');
+                    deferred.reject('The Mail is not valid: You need to include at least one recipient.');
                 }
+
                 return deferred.promise;
             }
 
@@ -47,8 +51,26 @@ angular.module('mailsManagerApp')
                 validateMail()
                     .then(sendMail)
                     .then(notifyUser)
-                    .then(redirectToMain)
+                    .then(init)
                     .catch(showAlert);
+            };
+
+            $scope.addNewRecipient = function () {
+
+                $scope.mail.recipients.push($scope.newMail);
+
+                var lastSelectedType = $scope.newMail.type;
+
+                $scope.newMail = {
+                    address: '',
+                    type: lastSelectedType
+                }
+
+                $scope.mailForm.$setPristine();
+            };
+
+            $scope.deleteRecipient = function(index) {
+                $scope.mail.recipients.splice(index, 1);
             };
 
             init();

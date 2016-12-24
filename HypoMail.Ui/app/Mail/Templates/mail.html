@@ -4,12 +4,12 @@
     </div>
     <div class="panel-body">
         <form role="form" class="form-horizontal" name="mailForm">
-            
+
             <div class="form-group">
                 <label for="mailFrom" class="col-sm-3 control-label">From:</label>
                 <div class="col-sm-9">
                     <input type="email" id="mailFrom" name="mailFrom" required class="form-control" ng-model="mail.from" />
-                    
+
                     <div class="alert alert-danger" ng-show="mailForm.mailFrom.$dirty && mailForm.mailFrom.$invalid">
                         Invalid:
                         <span ng-show="mailForm.mailFrom.$error.email">This is not a valid email.</span>
@@ -19,57 +19,74 @@
             </div>
 
             <div class="form-group">
-                <label for="mailTo" class="col-sm-3 control-label">To:</label>
-                <div class="col-sm-9">
-                    <input type="email" multiple="" id="mailTo" name="mailTo" class="form-control" ng-model="mail.to" />
-                    
-                    <div class="alert alert-danger" ng-show="mailForm.mailTo.$invalid">
-                        Invalid:
-                        <span ng-show="mailForm.mailTo.$error.email">This is not a valid email.</span>
-                    </div>
+                <div class="col-sm-3">
                 </div>
-            </div>
+                <div class="col-sm-9">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">E-Mail Recipients</h3>
+                        </div>
 
-            <div class="form-group">
-                <label for="mailCC" class="col-sm-3 control-label">CC:</label>
-                <div class="col-sm-9">
-                    <input type="email" id="mailCC" name="mailCC" multiple="" class="form-control" ng-model="mail.cc" />
-                    
-                    <div class="alert alert-danger" ng-show="mailForm.mailCC.$dirty && mailForm.mailCC.$invalid">
-                        Invalid:
-                        <span ng-show="mailForm.mailCC.$error.email">This is not a valid email.</span>
-                    </div>
-                </div>
-            </div>
+                        <div class="panel-body">
+                            <div class="col-sm-12">
+                                <div class="col-sm-3">
+                                    <select class="form-control" ng-model="newMail.type">
+                                        <option value="TO" selected="">TO</option>
+                                        <option value="CC">CC</option>
+                                        <option value="BCC">BCC</option>
+                                    </select>
+                                </div>
 
-            <div class="form-group">
-                <label for="mailBCC" class="col-sm-3 control-label">BCC:</label>
-                <div class="col-sm-9">
-                    <input type="email" id="mailBCC" name="mailBCC" multiple="" class="form-control" ng-model="mail.bcc" />
-                    
-                    <div class="alert alert-danger" ng-show="mailForm.mailBCC.$dirty && mailForm.mailBCC.$invalid">
-                        Invalid:
-                        <span ng-show="mailForm.mailBCC.$error.email">This is not a valid email.</span>
+
+                                <div class="col-sm-6">
+                                    <input type="email" id="newMail" required="" name="newMail" class="form-control" ng-model="newMail.address" />
+
+                                    <div class="alert alert-danger"
+                                         ng-show="!mailForm.newMail.$required && mailForm.newMail.$invalid">
+                                        <span>Invalid e-mail address.</span>
+                                    </div>
+                                </div>
+
+                                <input type="button"
+                                       value="Add"
+                                       class="btn btn-primary"
+                                       ng-click="addNewRecipient()"
+                                       ng-disabled="mailForm.newMail.$invalid" />
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-repeat="recipient in mail.recipients">
+                                    <tr>
+                                        <td ng-switch on="recipient.type">
+                                            <span ng-switch-when="TO" class="label label-success">To:</span>
+                                            <span ng-switch-when="CC" class="label label-info">CC:</span>
+                                            <span ng-switch-when="BCC" class="label label-warning">BCC:</span>
+                                        </td>
+                                        <td>{{recipient.address}}</td>
+                                        <td><button type="button" ng-click="deleteRecipient($index)" class="btn btn-sm btn-link">Delete</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            
-            <div class="alert alert-danger" ng-show="mailForm.mailTo.$error.required && mailForm.mailCC.$error.required && mailForm.mailBCC.$error.required">
-                Invalid:
-                <span>Introduce an e-mail.</span>
             </div>
 
             <div class="form-group">
                 <label for="subject" class="col-sm-3 control-label">Subject:</label>
                 <div class="col-sm-9">
                     <input type="text" id="subject" name="subject" required class="form-control" ng-model="mail.subject" />
-                    
-                    <div class="alert alert-danger" ng-show="mailForm.subject.$error.required">
-                        <span>Introduce a subject.</span>
-                    </div>
                 </div>
-            </div>            
+            </div>
 
             <div class="form-group">
                 <label for="message" class="col-sm-3 control-label">Message</label>
