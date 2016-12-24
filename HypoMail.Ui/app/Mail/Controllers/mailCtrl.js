@@ -36,23 +36,37 @@ angular.module('mailsManagerApp')
             };
 
             var showAlert = function (message) {
-                $window.alert(message);
+                if (message && message.statusText) {
+                    $window.alert(message.statusText);
+                } else {
+                    $window.alert("There has been an unexpected error while trying to send the e-mail.");
+                }
             }
 
             var notifyUser = function () {
                 $window.alert("The Mail has been successfully sent.");
             }
 
-            var redirectToMain = function () {
-                $location.path('/');
-            }
+            $scope.deleteRecipient = function (index) {
+                $scope.mail.recipients.splice(index, 1);
+            };
+
+            var turnOnSpinner = function() {
+                $scope.loading = true;
+            };
+
+            var turnOffSpinner = function () {
+                $scope.loading = false;
+            };
 
             $scope.sendMail = function () {
                 validateMail()
+                    .then(turnOnSpinner)
                     .then(sendMail)
                     .then(notifyUser)
                     .then(init)
-                    .catch(showAlert);
+                    .catch(showAlert)
+                    .finally(turnOffSpinner);
             };
 
             $scope.addNewRecipient = function () {
@@ -67,10 +81,6 @@ angular.module('mailsManagerApp')
                 }
 
                 $scope.mailForm.$setPristine();
-            };
-
-            $scope.deleteRecipient = function(index) {
-                $scope.mail.recipients.splice(index, 1);
             };
 
             init();

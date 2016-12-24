@@ -1,12 +1,55 @@
 ﻿namespace MailsManager.Ui.MailClients
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    public class Recipient
+    {
+        public string Type { get; set; }
+
+        public string Address { get; set; }
+    }
+
     public class Mail
     {
-        public string To { get; set; }
+        public string To { get; private set; }
 
-        public string Cc { get; set; }
+        public string Cc { get; private set; }
 
-        public string Bcc { get; set; }
+        public string Bcc { get; private set; }
+
+        private IEnumerable<Recipient> _recipients;
+
+        public IEnumerable<Recipient> Recipients {
+            get
+            {
+                return _recipients;
+            }
+
+            set
+            {
+                var _recipients = value;
+
+                this.To = string.Join(",", GetRecipientsByType(_recipients, "TO"));
+                this.Cc = string.Join(",", GetRecipientsByType(_recipients, "CC"));
+                this.Bcc = string.Join(",", GetRecipientsByType(_recipients, "BCC"));
+
+            }
+        }
+
+        private static IEnumerable<string> GetRecipientsByType(IEnumerable<Recipient> recipients, string type)
+        {
+            if (recipients == null)
+            {
+                return Enumerable.Empty<string>();
+            }
+
+            return recipients
+                .Where(r => string.Compare(r.Type, type, StringComparison.OrdinalIgnoreCase) == 0)
+                .Select(r => r.Address);
+        }
 
         public string Subject { get; set; }
 

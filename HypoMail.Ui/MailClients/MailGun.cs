@@ -22,9 +22,9 @@
 
                 var form = new Dictionary<string, string>();
                 form["from"] = mail.From;
-                form["to"] = string.Join(",", mail.To);
-                form["cc"] = string.Join(",", mail.Cc);
-                form["bcc"] = string.Join(",", mail.Bcc);
+                form["to"] = mail.To;
+                form["cc"] = mail.Cc;
+                form["bcc"] = mail.Bcc;
                 form["subject"] = mail.Subject;
                 form["text"] = mail.Message;
 

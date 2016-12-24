@@ -1,4 +1,6 @@
-﻿<div class="panel panel-primary">
+﻿<img id="spinner" src="/Images/spinner.gif" style="position:fixed;top:50%;left:50%;z-index: 1000" ng-show="loading" />
+
+<div class="panel panel-primary">
     <div class="panel-heading">
         <h3 class="panel-title">Mail Details: {{mail.subject}}</h3>
     </div>
@@ -8,8 +10,8 @@
             <div class="form-group">
                 <label for="mailFrom" class="col-sm-3 control-label">From:</label>
                 <div class="col-sm-9">
-                    <input type="email" id="mailFrom" name="mailFrom" required class="form-control" ng-model="mail.from" />
-
+                    <input type="email" id="mailFrom" name="mailFrom" disabled="true" required class="form-control" ng-model="mail.from" />
+                    
                     <div class="alert alert-danger" ng-show="mailForm.mailFrom.$dirty && mailForm.mailFrom.$invalid">
                         Invalid:
                         <span ng-show="mailForm.mailFrom.$error.email">This is not a valid email.</span>
@@ -39,7 +41,12 @@
 
 
                                 <div class="col-sm-6">
-                                    <input type="email" id="newMail" required="" name="newMail" class="form-control" ng-model="newMail.address" />
+                                    <input type="email" id="newMail"  name="newMail" class="form-control" ng-model="newMail.address" />
+                                    
+                                    <div class="alert alert-info"
+                                         ng-show="mailForm.newMail.$valid">
+                                        <span>Click on Add to inlude this e-mail</span>
+                                    </div>
 
                                     <div class="alert alert-danger"
                                          ng-show="!mailForm.newMail.$required && mailForm.newMail.$invalid">
