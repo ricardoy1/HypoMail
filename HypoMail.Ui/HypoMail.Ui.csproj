@@ -129,6 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\mailsManagerApp.js" />
+    <Content Include="app\Mail\Directives\notification.js" />
     <Content Include="app\Mail\Templates\mail.html" />
     <Content Include="app\Mail\Controllers\mailCtrl.js" />
     <Content Include="app\Mail\Services\mailService.js" />

@@ -47,7 +47,8 @@
                 .Include("~/Scripts/angular-ui/ui-bootstrap-tpls.min.js")
                 .Include("~/app/mailsManagerApp.js")
                 .Include("~/app/Mail/Controllers/mailCtrl.js")
-                .Include("~/app/Mail/Services/mailService.js"));
+                .Include("~/app/Mail/Services/mailService.js")
+                .Include("~/app/Mail/Directives/notification.js"));
         }
     }
 }

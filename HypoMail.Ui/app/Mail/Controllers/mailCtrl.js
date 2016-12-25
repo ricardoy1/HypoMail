@@ -37,6 +37,12 @@ angular.module('mailsManagerApp')
 
             var showAlert = function (message) {
                 if (message && message.data && message.data.message) {
+                    $scope.notificationAlert = {
+                        message: message.data.message,
+                        type: 'danger',
+                        status: 'show'
+                    };
+
                     $window.alert(message.data.message);
                 } else {
                     $window.alert("There has been an unexpected error while trying to send the e-mail.");
