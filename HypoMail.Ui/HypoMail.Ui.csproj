@@ -937,10 +937,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="MailClients\IMailClient.cs" />
-    <Compile Include="MailClients\Mail.cs" />
+    <Compile Include="MailFramework\IMailClient.cs" />
+    <Compile Include="MailFramework\Mail.cs" />
+    <Compile Include="MailFramework\MailClientFactory.cs" />
     <Compile Include="MailClients\MailGun.cs" />
+    <Compile Include="MailFramework\MailSender.cs" />
     <Compile Include="MailClients\SendGrid.cs" />
+    <Compile Include="MailFramework\SendMailResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

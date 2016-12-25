@@ -6,6 +6,8 @@
     using System.Net.Http.Headers;
     using System.Text;
 
+    using MailsManager.Ui.MailFramework;
+
     public class MailGun : IMailClient
     {
         private const string ApiKey = "key-XXXXXXXXXXXXXXXXXXXXXXXXXX";

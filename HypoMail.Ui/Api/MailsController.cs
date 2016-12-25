@@ -5,9 +5,7 @@
     using System.Web.Http;
 
     using MailsManager.Ui.MailClients;
-
-    // [Authorize]
-    // TODO: Uncomment the above line when security is implemented: JIRA-1234
+    using MailsManager.Ui.MailFramework;
 
     /// <summary>
     /// Mails Web API controller.
@@ -21,12 +19,14 @@
         [HttpPost]
         public HttpResponseMessage Send(Mail mail)
         {
-            // MailGun client = new MailGun();
-            SendGrid client = new SendGrid();
+            var result = MailSender.GetInstance().SendMail(mail);
 
-            var result = client.Send(mail);
+            if (result.Status == Status.Error)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, new { Message = result.Message });
+            }
 
-            return Request.CreateResponse(result.StatusCode);
+            return Request.CreateResponse(HttpStatusCode.OK, new { Message = result.Message });
         }
     }
 }

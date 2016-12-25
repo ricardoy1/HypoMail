@@ -36,8 +36,8 @@ angular.module('mailsManagerApp')
             };
 
             var showAlert = function (message) {
-                if (message && message.statusText) {
-                    $window.alert(message.statusText);
+                if (message && message.data && message.data.message) {
+                    $window.alert(message.data.message);
                 } else {
                     $window.alert("There has been an unexpected error while trying to send the e-mail.");
                 }

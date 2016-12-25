@@ -44,12 +44,12 @@
                                     <input type="email" id="newMail"  name="newMail" class="form-control" ng-model="newMail.address" />
                                     
                                     <div class="alert alert-info"
-                                         ng-show="mailForm.newMail.$valid">
+                                         ng-show="newMail.address && mailForm.newMail.$valid">
                                         <span>Click on Add to inlude this e-mail</span>
                                     </div>
 
                                     <div class="alert alert-danger"
-                                         ng-show="!mailForm.newMail.$required && mailForm.newMail.$invalid">
+                                         ng-show="mailForm.newMail.$invalid">
                                         <span>Invalid e-mail address.</span>
                                     </div>
                                 </div>

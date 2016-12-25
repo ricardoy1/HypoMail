@@ -1,7 +1,6 @@
-﻿namespace MailsManager.Ui.MailClients
+﻿namespace MailsManager.Ui.MailFramework
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -25,7 +24,7 @@
         public IEnumerable<Recipient> Recipients {
             get
             {
-                return _recipients;
+                return this._recipients;
             }
 
             set

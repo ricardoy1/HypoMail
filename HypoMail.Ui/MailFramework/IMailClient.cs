@@ -1,7 +1,8 @@
-﻿namespace MailsManager.Ui.MailClients
+﻿namespace MailsManager.Ui.MailFramework
 {
     using System.Net.Http;
-    using System.Threading.Tasks;
+
+    using MailsManager.Ui.MailClients;
 
     public interface IMailClient
     {

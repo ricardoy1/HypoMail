@@ -5,6 +5,8 @@ namespace MailsManager.Ui.MailClients
     using System.Net.Http;
     using System.Net.Http.Headers;
 
+    using MailsManager.Ui.MailFramework;
+
     public class SendGrid : IMailClient
     {
         // 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
