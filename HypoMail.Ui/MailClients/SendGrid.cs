@@ -1,25 +1,24 @@
-﻿using System;
-
-namespace MailsManager.Ui.MailClients
+﻿namespace MailsManager.Ui.MailClients
 {
+    using System;
     using System.Net.Http;
     using System.Net.Http.Headers;
+    using System.Web.Configuration;
 
     using MailsManager.Ui.MailFramework;
 
     public class SendGrid : IMailClient
     {
-        // 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
-        // https://api.sendgrid.com/v3/mail/send
         public HttpResponseMessage Send(Mail mail)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://api.sendgrid.com");
+                var apiKey = WebConfigurationManager.AppSettings["sendGridKey"];
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
                     "Bearer",
-                    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+                    apiKey);
                 client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
 
                 var dynamicMessage =

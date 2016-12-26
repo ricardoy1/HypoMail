@@ -61,7 +61,7 @@
                                        value="Add"
                                        class="btn btn-primary"
                                        ng-click="addNewRecipient()"
-                                       ng-disabled="mailForm.newMail.$invalid" />
+                                       ng-disabled="mailForm.newMail.$invalid || newMail.address===''" />
                             </div>
                         </div>
 
@@ -94,7 +94,7 @@
             <div class="form-group">
                 <label for="subject" class="col-sm-3 control-label">Subject:</label>
                 <div class="col-sm-9">
-                    <input type="text" id="subject" name="subject" required class="form-control" ng-model="mail.subject" />
+                    <input type="text" id="subject" name="subject" class="form-control" ng-model="mail.subject" />
                 </div>
             </div>
 

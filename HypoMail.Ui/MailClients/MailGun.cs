@@ -5,16 +5,17 @@
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Text;
+    using System.Web.Configuration;
 
     using MailsManager.Ui.MailFramework;
 
     public class MailGun : IMailClient
     {
-        private const string ApiKey = "key-XXXXXXXXXXXXXXXXXXXXXXXXXX";
+        private const string Domain = "hypodomain.com";
 
         public HttpResponseMessage Send(Mail mail)
         {
-            var apiKey = string.Format("api:{0}", ApiKey);
+            var apiKey = WebConfigurationManager.AppSettings["mailGunKey"];
 
             using (var client = new HttpClient())
             {
@@ -32,7 +33,7 @@
 
                 var response =
                     client.PostAsync(
-                        "https://api.mailgun.net/v3/hypodomain.com/messages",
+                        string.Format("https://api.mailgun.net/v3/{0}/messages", apiKey),
                         new FormUrlEncodedContent(form)).Result;
 
                 return response;

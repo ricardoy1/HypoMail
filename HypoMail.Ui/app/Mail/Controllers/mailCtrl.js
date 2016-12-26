@@ -18,6 +18,8 @@ angular.module('mailsManagerApp')
                     type: 'TO',
                     address: ''
                 };
+
+                $scope.notificationAlert = {};
             }
 
             var validateMail = function () {
@@ -37,15 +39,11 @@ angular.module('mailsManagerApp')
 
             var showAlert = function (message) {
                 if (message && message.data && message.data.message) {
-                    $scope.notificationAlert = {
-                        message: message.data.message,
-                        type: 'danger',
-                        status: 'show'
-                    };
-
-                    $window.alert(message.data.message);
-                } else {
-                    $window.alert("There has been an unexpected error while trying to send the e-mail.");
+                    showError(message.data.message);
+                } else if (message) {
+                    showError(message);
+                }else {
+                    showError("There has been an unexpected error while trying to send the e-mail.");
                 }
             }
 
@@ -87,6 +85,23 @@ angular.module('mailsManagerApp')
                 }
 
                 $scope.mailForm.$setPristine();
+            };
+
+
+            var showError = function(message) {
+                showNotification(message, 'danger');
+            };
+
+            var showInfo = function (message) {
+                showNotification(message, 'info');
+            };
+
+            var showNotification = function(message, type) {
+                $scope.notificationAlert = {
+                    message: message,
+                    type: type,
+                    status: 'show'
+                };
             };
 
             init();
