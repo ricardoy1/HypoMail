@@ -22,12 +22,12 @@ The front-end Angular JS application communicates with the server (GETs, POSTs) 
 
 *Service Layer*
 The Web Api controller performs some exception handling by validating the model and returning a proper HTTP response. This controller gets injected, what I decided to call, a Business Service (MailsService) that is in charge of the business validations and interacting with the email server.
-In order to keep a ligh-weight client and reduce the exposure of unnecessary information to the it, I decided to use DTOs that will contain the necessary information the user interface requires.
+In order to keep a ligh-weight client and reduce the exposure of unnecessary information to the it.
 
 *Business Service Mails*
-This MailsService takes care of the business concerns of persisting, getting and deleting Mails rather than the infrastructure related features like HTTP response code, etc.
-The MailsService takes the DTOs from the client and transform them back to the business model and the other way around through the use of mappers. (http://en.wikipedia.org/wiki/Data_mapper_pattern).
+The MailSender class is a singletone that allows us to abstract from the mail sending implementation.
 
+The mail sending implementation is about iterating over the list of mail clients and try to send one by one until it gets a successful response.
 
 *Validation*
 
@@ -37,7 +37,7 @@ I have taken a TDD approach during the development of this application and I use
 *Unit Testing*
 The appliation counts with many unit tests that cover the main features from back and fron end. 
 I used Jasmine to test each of the controls and mocking its dependencies using Spy and $q among others. The Javascript tests can be run from the web app by adding /specs/testrunner.html to the URL.
-C# unit testing used Fluent Assertions as I consider this makes unit tests quite readble.
+C# unit testing used Fluent Assertions as I consider this makes unit tests quite readble. (PENDING)
 
 *Unit Testing Technologies*
 NUnit
