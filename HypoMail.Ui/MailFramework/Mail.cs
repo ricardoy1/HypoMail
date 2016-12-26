@@ -29,11 +29,11 @@
 
             set
             {
-                var _recipients = value;
+                this._recipients = value;
 
-                this.To = string.Join(",", GetRecipientsByType(_recipients, "TO"));
-                this.Cc = string.Join(",", GetRecipientsByType(_recipients, "CC"));
-                this.Bcc = string.Join(",", GetRecipientsByType(_recipients, "BCC"));
+                this.To = string.Join(",", GetRecipientsByType(this._recipients, "TO"));
+                this.Cc = string.Join(",", GetRecipientsByType(this._recipients, "CC"));
+                this.Bcc = string.Join(",", GetRecipientsByType(this._recipients, "BCC"));
 
             }
         }

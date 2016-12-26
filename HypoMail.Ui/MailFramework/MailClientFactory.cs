@@ -5,9 +5,19 @@
     using System.Collections.Specialized;
     using System.Configuration;
     using System.Linq;
+    using System.Reflection;
 
+    /// <summary>
+    /// Factory of email clients.
+    /// It will retrieve the list of email clients from the config file.
+    /// </summary>
     public static class MailClientFactory
     {
+
+        /// <summary>
+        /// List of new Email clients.
+        /// </summary>
+        /// <returns></returns>
         public static IEnumerable<IMailClient> GetMailClients()
         {
             var config = ConfigurationManager.GetSection("mailClients") as NameValueCollection;
@@ -18,7 +28,7 @@
             }
 
             return config.AllKeys
-                .Select(key => Activator.CreateInstance(null, config[key]).Unwrap())
+                .Select(key => Activator.CreateInstance(Assembly.GetExecutingAssembly().GetName().Name, config[key]).Unwrap())
                 .OfType<IMailClient>()
                 .ToList();
         }

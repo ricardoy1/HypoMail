@@ -24,10 +24,29 @@
                 var dynamicMessage =
                     new
                         {
-                            personalizations = new[] { new { to = new[] { new { email = mail.To } } } },
-                            from = new { email = mail.From },
+                            personalizations = new[]
+                                                   {
+                                                       new
+                                                           {
+                                                               to = new[]
+                                                                        {
+                                                                            new { email = mail.To }
+                                                                        }
+                                                           }
+                                                   },
+                            from = new
+                                       {
+                                           email = mail.From
+                                       },
                             subject = mail.Subject,
-                            content = new[] { new { type = "text/plain", value = mail.Message } }
+                            content = new[]
+                                          {
+                                              new
+                                                  {
+                                                      type = "text/plain", 
+                                                      value = mail.Message
+                                                  }
+                                          }
                         };
 
                 var result = client.PostAsJsonAsync("https://api.sendgrid.com/v3/mail/send", dynamicMessage).Result;

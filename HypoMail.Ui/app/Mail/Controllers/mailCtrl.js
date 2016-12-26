@@ -8,7 +8,7 @@ angular.module('mailsManagerApp')
             var init = function () {
 
                 $scope.mail = {
-                    from: 'developer@hypodomain.com',
+                    from: 'lionel.messi@mailgun.org',
                     recipients: [],
                     subject: '',
                     message: ''
@@ -24,12 +24,26 @@ angular.module('mailsManagerApp')
 
             var validateMail = function () {
                 var deferred = $q.defer();
-                if ($scope.mail.recipients.length > 0) {
-                    deferred.resolve();
-                } else {
-                    deferred.reject('The Mail is not valid: You need to include at least one recipient.');
+
+                var errorMessage = '';
+                if ($scope.mail.recipients.length === 0) {
+                    errorMessage += 'You need to include at least one recipient.\n';
+                    
+                } 
+                
+                if (!$scope.mail.subject){
+                    errorMessage += 'Subject is mandatory.\n';
                 }
 
+                if (!$scope.mail.message) {
+                    errorMessage += 'The email messsage is mandatory.\n';
+                }
+
+                if (errorMessage) {
+                    deferred.reject({ errorMessage: errorMessage });
+                }
+
+                deferred.resolve();
                 return deferred.promise;
             }
 
@@ -40,8 +54,8 @@ angular.module('mailsManagerApp')
             var showAlert = function (message) {
                 if (message && message.data && message.data.message) {
                     showError(message.data.message);
-                } else if (message) {
-                    showError(message);
+                } if (message && message.errorMessage) {
+                    showError(message.errorMessage);
                 }else {
                     showError("There has been an unexpected error while trying to send the e-mail.");
                 }

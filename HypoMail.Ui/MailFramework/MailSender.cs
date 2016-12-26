@@ -6,8 +6,10 @@
     using System.Net;
     using System.Net.Http;
 
-    using MailsManager.Ui.MailClients;
-
+    /// <summary>
+    /// Mail sender: singletone that abstracts the interaction with the email clients. 
+    /// It will deal with a fail over in the case a mail client returns an error.
+    /// </summary>
     public class MailSender
     {
 
@@ -40,6 +42,11 @@
             }
         }
 
+        /// <summary>
+        /// Sends email using the first successful mail client.
+        /// </summary>
+        /// <param name="mail"></param>
+        /// <returns></returns>
         public SendMailResult SendMail(Mail mail)
         {
             HttpResponseMessage response = null;
@@ -48,7 +55,7 @@
             {
                 response = mailClient.Send(mail);
 
-                if (response.StatusCode == HttpStatusCode.OK)
+                if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted)
                 {
                     return new SendMailResult { Message = this.GetMessage(response), Status = Status.Success };
                 }
@@ -74,6 +81,10 @@
                     return "Mail successfully sent.";
                 case HttpStatusCode.Unauthorized:
                     return "The user is not authorized to send an e-mail.";
+
+                case HttpStatusCode.InternalServerError:
+                case HttpStatusCode.ServiceUnavailable:
+                    return "The e-mail server returned an error.";
                 default:
                     return "Uknown error while trying to send the e-mail.";
             }
