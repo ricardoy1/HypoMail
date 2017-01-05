@@ -49,45 +49,27 @@
         /// <returns></returns>
         public SendMailResult SendMail(Mail mail)
         {
-            HttpResponseMessage response = null;
+            MailResponse response = null;
 
             foreach (var mailClient in _mailClients)
             {
                 response = mailClient.Send(mail);
 
-                if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted)
+                if (response.IsOk())
                 {
-                    return new SendMailResult { Message = this.GetMessage(response), Status = Status.Success };
+                    return new SendMailResult
+                               {
+                                   Message = "Mail successfully sent.",
+                                   Status = Status.Success
+                               };
                 }
             }
 
             return new SendMailResult
                        {
                            Status = Status.Error,
-                           Message = this.GetMessage(response)
+                           Message = response.GetErrorMessage()
                        }; 
-        }
-
-        private string GetMessage(HttpResponseMessage response)
-        {
-            if (response == null)
-            {
-                return "Uknown error while trying to send the e-mail.";
-            }
-
-            switch (response.StatusCode)
-            {
-                case HttpStatusCode.OK:
-                    return "Mail successfully sent.";
-                case HttpStatusCode.Unauthorized:
-                    return "The user is not authorized to send an e-mail.";
-
-                case HttpStatusCode.InternalServerError:
-                case HttpStatusCode.ServiceUnavailable:
-                    return "The e-mail server returned an error.";
-                default:
-                    return "Uknown error while trying to send the e-mail.";
-            }
         }
     }
 }

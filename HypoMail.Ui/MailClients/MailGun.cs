@@ -12,9 +12,8 @@
 
     public class MailGun : IMailClient
     {
-        
 
-        public HttpResponseMessage Send(Mail mail)
+        public MailResponse Send(Mail mail)
         {
             var apiKey = WebConfigurationManager.AppSettings["mailGunKey"];
             var domain = WebConfigurationManager.AppSettings["mailGunDomain"];
@@ -52,12 +51,33 @@
                 form["subject"] = mail.Subject;
                 form["text"] = mail.Message;
 
-                var response =
-                    client.PostAsync(
-                        string.Format("https://api.mailgun.net/v3/{0}/messages", domain),
-                        new FormUrlEncodedContent(form)).Result;
 
-                return response;
+                try
+                {
+                    var response =
+                        client.PostAsync(
+                            string.Format("https://api.mailgun.net/v3/{0}/messages", domain),
+                            new FormUrlEncodedContent(form)).Result;
+
+                    return new MailResponse(response);
+
+                }
+                catch (AggregateException ex)
+                {
+                    var message = "There has been an error while trying to connect to the e-mail server.";
+                    ex.Handle(x =>
+                    {
+                        if (x is HttpRequestException)
+                        {
+                            message = "The e-mail client is not connected to the network.";
+                            return true;
+                        }
+
+                        return false;
+                    });
+
+                    return new MailResponse { Message = message };
+                }
             }
         }
     }

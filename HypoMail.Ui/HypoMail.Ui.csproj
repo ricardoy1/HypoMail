@@ -942,6 +942,7 @@
     <Compile Include="MailFramework\Mail.cs" />
     <Compile Include="MailFramework\MailClientFactory.cs" />
     <Compile Include="MailClients\MailGun.cs" />
+    <Compile Include="MailFramework\MailResponse.cs" />
     <Compile Include="MailFramework\MailSender.cs" />
     <Compile Include="MailClients\SendGrid.cs" />
     <Compile Include="MailFramework\SendMailResult.cs" />

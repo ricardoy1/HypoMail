@@ -6,6 +6,6 @@
 
     public interface IMailClient
     {
-        HttpResponseMessage Send(Mail mail);
+        MailResponse Send(Mail mail);
     }
 }

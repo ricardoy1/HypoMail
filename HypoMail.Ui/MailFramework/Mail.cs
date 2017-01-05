@@ -13,6 +13,12 @@
 
     public class Mail
     {
+        public const string TO = "TO";
+
+        public const string CC = "CC";
+
+        public const string BCC = "BCC";
+
         public string To { get; private set; }
 
         public string Cc { get; private set; }
@@ -31,21 +37,21 @@
             {
                 this._recipients = value;
 
-                this.To = string.Join(",", GetRecipientsByType(this._recipients, "TO"));
-                this.Cc = string.Join(",", GetRecipientsByType(this._recipients, "CC"));
-                this.Bcc = string.Join(",", GetRecipientsByType(this._recipients, "BCC"));
+                this.To = string.Join(",", this.GetRecipientsByType(TO));
+                this.Cc = string.Join(",", this.GetRecipientsByType(CC));
+                this.Bcc = string.Join(",", this.GetRecipientsByType(BCC));
 
             }
         }
 
-        private static IEnumerable<string> GetRecipientsByType(IEnumerable<Recipient> recipients, string type)
+        public IEnumerable<string> GetRecipientsByType(string type)
         {
-            if (recipients == null)
+            if (this.Recipients == null)
             {
                 return Enumerable.Empty<string>();
             }
 
-            return recipients
+            return this.Recipients
                 .Where(r => string.Compare(r.Type, type, StringComparison.OrdinalIgnoreCase) == 0)
                 .Select(r => r.Address);
         }

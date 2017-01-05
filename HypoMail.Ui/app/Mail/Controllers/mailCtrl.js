@@ -28,8 +28,19 @@ angular.module('mailsManagerApp')
                 var errorMessage = '';
                 if ($scope.mail.recipients.length === 0) {
                     errorMessage += 'You need to include at least one recipient.\n';
-                    
-                } 
+
+                } else {
+                    var countTo = 0;
+                    for (var i = 0; i < $scope.mail.recipients.length; i++) {
+                        if ($scope.mail.recipients[i].type === 'TO') {
+                            countTo++;
+                        }
+                    }
+
+                    if (countTo === 0) {
+                        errorMessage += 'You need to include at least one recipient in the "To" list.\n';
+                    }
+                }
                 
                 if (!$scope.mail.subject){
                     errorMessage += 'Subject is mandatory.\n';
@@ -53,10 +64,15 @@ angular.module('mailsManagerApp')
 
             var showAlert = function (message) {
                 if (message && message.data && message.data.message) {
+
                     showError(message.data.message);
-                } if (message && message.errorMessage) {
+
+                } else if (message && message.errorMessage) {
+
                     showError(message.errorMessage);
-                }else {
+
+                } else {
+
                     showError("There has been an unexpected error while trying to send the e-mail.");
                 }
             }
@@ -104,10 +120,6 @@ angular.module('mailsManagerApp')
 
             var showError = function(message) {
                 showNotification(message, 'danger');
-            };
-
-            var showInfo = function (message) {
-                showNotification(message, 'info');
             };
 
             var showNotification = function(message, type) {
